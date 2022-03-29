@@ -30,3 +30,7 @@ def register(username, password):
 def logout():
     del session["user_id"]
     del session["username"]
+
+def check_csrf():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)

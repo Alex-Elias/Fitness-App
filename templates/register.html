@@ -1,13 +1,31 @@
+<link rel="stylesheet" href="/static/main.css">
 <h2>Register</h2>
 
 <form action="/register" method="post">
-    Username: <br><input type="text" name="username" minlength="1" maxlength="20">
+    Username: 
+    {% if usernameErrorMessage %}
+    <br><span class="errorMessage">{{ usernameErrorMessage }}</span>
+    {% endif %}
+    
+    <br><input type="text" name="username" minlength="1" maxlength="20" value={{ reusername }}>
     <p>
-    Password: <br><input type="password" name="password">
+    Password: 
+    {% if passwordLengthErrorMessage %}
+    <br><span class="errorMessage">{{ passwordLengthErrorMessage }}</span>
+    {% endif %}
+    <br><input type="password" name="password">
     <p>
-    Retype password: <br><input type="password" name="repassword"
+    Retype password: 
+    {% if passwordsDoNotMatchErrorMessage %}
+    <br><span class="errorMessage">{{ passwordsDoNotMatchErrorMessage }}</span>
+    {% endif %}
+    <br><input type="password" name="repassword">
         
-    <p>
+    
+    <br>
+    {% if registrationErrorMessage %}
+    <br><span class="errorMessage">{{ registrationErrorMessage }}</span><br>
+    {% endif %}
     <input type="submit" value="Create account">
 </form>
 <p>

@@ -2,9 +2,11 @@
 
 An application where the user can record their workouts, plan workouts, set goals, and save their PRs(personal records)
 
+## Implemented
 * The user can create an account
 * The user can log into an existing account
 * The user can log out of their account
+## TODO
 * The user can add/remove activities to/from their account
 * The user Can add/remove planned workouts to/from their account
 * The user can add/remove goals to/from their account

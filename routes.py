@@ -15,6 +15,15 @@ def workouts():
     workout_list = workout.getWorkouts()
     return render_template("workouts.html", workouts=workout_list)
 
+@app.route("/removeworkout", methods=["post"])
+def removeWorkout():
+    if request.method == "POST":
+        users.check_csrf()
+        workout_id = request.form["workout_id"]
+        workout.remove(workout_id)
+        return workouts()
+
+
 
 @app.route("/addworkout", methods=["get", "post"])
 def addWorkout():
@@ -23,12 +32,12 @@ def addWorkout():
         return render_template("addworkout.html",today=today)
     
     if request.method == "POST":
-
+        users.check_csrf()
         name = request.form["workoutname"]
-        discription = request.form["workoutdiscription"]
+        description = request.form["workoutdescription"]
         date = request.form["workoutdate"]
 
-        if not workout.add(name,discription, date):
+        if not workout.add(name,description, date):
             # TO DO 
             print("could not add workout")
         return render_template("addworkout.html")

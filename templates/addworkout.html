@@ -2,10 +2,10 @@
 
 <form action="/addworkout" method="post">
     Name of workout: <br><input type="text" name="workoutname"><br>
-    Workout discription: <br><textarea name="workoutdiscription" rows="20" columns="100"></textarea><br>
+    Workout description: <br><textarea name="workoutdescription" rows="10" cols="50"></textarea><br>
     Date for workout: <br><input type="date" name="workoutdate" value={{ today }}>
     <br><input type="submit" value="Create workout">
-
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
 
 
 

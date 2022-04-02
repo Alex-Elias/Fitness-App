@@ -7,7 +7,7 @@ CREATE TABLE workout (
     id SERIAL PRIMARY KEY,
     user_id INTEGER,
     workout_name TEXT,
-    discription TEXT,
-    workout_date date
+    description TEXT,
+    workout_date date,
+    visible INTEGER
     );
-    

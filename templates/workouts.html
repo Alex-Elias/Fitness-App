@@ -1,11 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
 <h2>Workouts</h2>
 
-{% for workout in workouts %}
-<br><b>{{workout.workout_name}}</b>  &nbsp;&nbsp;&nbsp;&nbsp;<label>{{workout.workout_date}}</label> <br>
+<!-- The Modal -->
+<div id="myModal" class="modal">
 
-<p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{workout.discription}}</p>
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Are you sure you want to remove this workout? This action cannot be undone</h2>
+      <form action="/removeworkout" method="post">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+      <input type="hidden" id="workout_id" name="workout_id" value="">
+      <input type="submit" value="Yes">
+      
+
+      </form>
+      <button id="No" onclick="close_model()">No</button>
+    </div>
+  
+  </div>
+
+{% for workout in workouts %}
+<br><b>{{workout.workout_name}}</b>  &nbsp;&nbsp;&nbsp;&nbsp;<label>{{workout.workout_date}}</label> 
+&nbsp;&nbsp;&nbsp;&nbsp; <button type="button" id="myBtn" onclick="open_model({{workout.id}})">Remove workout</button><br>
+
+<p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{workout.description}}</p>
 
 
 
 
 {% endfor %}
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    // When the user clicks the button, open the modal 
+    function open_model(id) {
+      modal.style.display = "block";
+      document.getElementById("workout_id").value = id;
+    }
+    function close_model() {
+        modal.style.display = "none"
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>

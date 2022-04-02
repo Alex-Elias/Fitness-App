@@ -1,6 +1,8 @@
 <h2>Front page</h2>
 {% if session.user_id%}
 You are logged in as <b>{{ session.username }}</b>. If this is not you, <a href="/logout">Switch users</a>
+<br>Create a <a href="/addworkout">workout</a> 
+<br> View your <a href="/workouts">workouts</a>
 {% else %}
 You are not logged in. <a href="/login">Log in</a>
 {% endif %}

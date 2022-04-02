@@ -1,0 +1,11 @@
+<h2>Workouts</h2>
+
+{% for workout in workouts %}
+<br><b>{{workout.workout_name}}</b>  &nbsp;&nbsp;&nbsp;&nbsp;<label>{{workout.workout_date}}</label> <br>
+
+<p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{workout.discription}}</p>
+
+
+
+
+{% endfor %}

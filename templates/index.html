@@ -4,6 +4,16 @@ You are logged in as <b>{{ session.username }}</b>. If this is not you, <a href=
 <br>Create a <a href="/addworkout">workout</a> 
 <br> View your <a href="/workouts">workouts</a>
 {% else %}
-You are not logged in. <a href="/login">Log in</a>
+<meta http-equiv="refresh" content="0; URL=/login">
 {% endif %}
 
+<h2>Today's workouts:</h2>
+{% for workout in workouts %}
+<br><b>{{workout.workout_name}}</b><br>
+
+<p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{workout.description}}</p>
+
+
+
+
+{% endfor %}

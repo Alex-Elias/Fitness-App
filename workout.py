@@ -27,13 +27,12 @@ def getWorkouts():
 
     return workout
 
-def getWorkoutToday():
-    date = datetime.now().strftime('%Y-%m-%d')
-    user_id = session["user_id"]
-    sql = "SELECT workoutname, description FROM workout WHERE user_id=:user_id AND workoutdate:=workoutdate AND visible=1"
-    results = db.session.execute(sql, {"user_id":user_id, "workoutdate":date})
+def getWorkoutToday(user_id):
+    date = datetime.today().strftime('%Y-%m-%d')
+    print(date)
+    sql = "SELECT workout_name, description FROM workout WHERE user_id=:user_id AND workout_date=CURRENT_DATE AND visible=1"
+    results = db.session.execute(sql, {"user_id":user_id})
     workout = results.fetchall()
-    name = workout[0]
-    description = workout[1]
+    
 
-    return (name, description)
+    return workout

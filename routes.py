@@ -8,7 +8,9 @@ import workout
 
 @app.route("/")
 def index():
-        return render_template("index.html")
+    user_id = users.user_id()
+
+    return render_template("index.html", workouts=workout.getWorkoutToday(user_id))
 
 @app.route("/workouts")
 def workouts():

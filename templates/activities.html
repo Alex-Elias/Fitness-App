@@ -1,0 +1,17 @@
+
+<h2>Activities</h2>
+<a href="/">Return to the main page</a><br>
+{% for activity in activities %}
+
+<b>Name:</b><label>{{activity.name}}</label><br>
+<b>Activity type:</b><label>{{activity.type_id}}</label><br>
+<b>Date:</b><label>{{activity.date}}</label><br>
+<b>Distance:</b> <label>{{activity.distance}}</label> <b>Time</b><label>{{activity.time}}</label><br>
+<b>Message:</b><br>
+
+<p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{activity.message}}</p>
+
+
+
+
+{% endfor %}

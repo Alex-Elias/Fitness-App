@@ -1,0 +1,55 @@
+
+<h2>Add an activity</h2>
+<a href="/">Return to the main page</a><br>
+<form action="/addactivity" method="post">
+
+<label>Name:    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;          Type:</label><br>
+<input type="text" name="name" minlength="1" maxlength="20">
+<select id="type" name="type">
+<option value="1">Running</option>
+<option value="2">Cycling</option>
+<option value="3">Skiing</option>
+<option value="4">Swimming</option>
+<option value="5">Walking</option>
+
+</select><br>
+<label>Distance: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;Time:</label><br>
+
+<input type="text" name="distance" minlength="1" maxlength="10" value="000.00">
+<input type="text" name="time" value="00:00:00"><br>
+<label>Message:</label><br>
+<textarea name="message" rows="10" cols="50"></textarea><br>
+<label>Date:</label><input type="date" name="date" value="{{ today }}"><br>
+<input type="submit" value="Save activity">
+
+<input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+
+</form>
+
+
+
+
+<!-- Could not get this to work on time, Need to change &#39; to (') for the list of names. Had to hard code it instead
+<script>
+    var workout_types_id = {{types_id}};
+    var workout_types_name = {{types_name}};
+    var select = document.getElementById("type");
+    workout_types_id.foreach((element, index) => {const name = workout_types_name[idex]; add_element(element, name);});
+    function add_element(type_id, type_name) {
+        console.log(type_name);
+        var opt = document.createElement("option");
+        opt.value = type_id;
+        opt.innerHTML = type_name;
+        select.appendchild(opt);
+    }
+
+
+
+
+
+</script>
+-->

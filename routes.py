@@ -4,6 +4,7 @@ from os import getenv
 import users
 from datetime import datetime
 import workout
+import activity
 
 
 @app.route("/")
@@ -17,6 +18,11 @@ def workouts():
     workout_list = workout.getWorkouts()
     return render_template("workouts.html", workouts=workout_list)
 
+@app.route("/activities")
+def activities():
+    activities_list = activity.getActivities()
+    return render_template("activities.html", activities=activities_list)
+
 @app.route("/removeworkout", methods=["post"])
 def removeWorkout():
     if request.method == "POST":
@@ -25,6 +31,31 @@ def removeWorkout():
         workout.remove(workout_id)
         return workouts()
 
+@app.route("/addactivity", methods=["get", "post"])
+def addActivity():
+    today = datetime.now().strftime('%Y-%m-%d')
+#    types = activity.getTypes()
+#    types_id = []
+#    types_name = []
+#    for type in types:
+#        types_id.append(type[0])
+#        types_name.append(str(type.name))
+#    print(types_name)
+    if request.method == "GET":
+        return render_template("addactivity.html", today=today)
+    
+    if request.method == "POST":
+        users.check_csrf()
+        name = request.form["name"]
+        type = request.form["type"]
+        distance = request.form["distance"]
+        time = request.form["time"]
+        message = request.form["message"]
+        date = request.form["date"]
+        user_id = users.user_id()
+        activity.add(user_id,name,type,0,time,distance,date,message)
+    
+    return render_template("addactivity.html", today=today)
 
 
 @app.route("/addworkout", methods=["get", "post"])
@@ -42,7 +73,7 @@ def addWorkout():
         if not workout.add(name,description, date):
             # TO DO 
             print("could not add workout")
-        return render_template("addworkout.html")
+        return render_template("addworkout.html", today=today)
 
 
 @app.route("/login", methods=["get", "post"])

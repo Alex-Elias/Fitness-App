@@ -27,7 +27,13 @@ CREATE TABLE activities (
 
 CREATE TABLE types (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT UNIQUE
 
 
 );
+
+INSERT INTO types (name) VALUES ('Running');
+INSERT INTO types (name) VALUES ('Cycling');
+INSERT INTO types (name) VALUES ('Skiing');
+INSERT INTO types (name) VALUES ('Swiming');
+INSERT INTO types (name) VALUES ('Walking');

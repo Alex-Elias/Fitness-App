@@ -1,5 +1,5 @@
 from db import db
-from flask import abort, request, session
+from flask import session
 from datetime import datetime
 
 def add(name, description, date):
@@ -18,7 +18,7 @@ def remove(workout_id):
     db.session.execute(sql, {"workout_id":workout_id, "user_id":user_id})
     db.session.commit()
 
-def getWorkouts():
+def get_workouts():
     user_id = session["user_id"]
     sql = "SELECT id, workout_name, description, workout_date FROM workout WHERE user_id=:user_id AND visible=1"
     results = db.session.execute(sql, {"user_id":user_id})
@@ -27,7 +27,7 @@ def getWorkouts():
 
     return workout
 
-def getWorkoutToday(user_id):
+def get_workout_today(user_id):
     date = datetime.today().strftime('%Y-%m-%d')
     print(date)
     sql = "SELECT workout_name, description FROM workout WHERE user_id=:user_id AND workout_date=CURRENT_DATE AND visible=1"

@@ -1,6 +1,6 @@
 from db import db
-from flask import abort, request, session
-from datetime import datetime
+from flask import session
+
 
 def add(user_id, name, frequency, message):
     sql = """INSERT INTO goals (user_id, name, frequency, message, visible) VALUES 

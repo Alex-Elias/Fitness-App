@@ -13,14 +13,15 @@ import goals
 def index():
     user_id = users.user_id()
 
-    return render_template("index.html", workouts=workout.getWorkoutToday(user_id), goals=goals.get(user_id))
+    return render_template("index.html", workouts=workout.get_workout_today(user_id), goals=goals.get(user_id))
 
 @app.route("/workouts")
 def workouts():
-    workout_list = workout.getWorkouts()
+    workout_list = workout.get_workouts()
     return render_template("workouts.html", workouts=workout_list)
+
 @app.route("/removeactivity", methods=["post"])
-def removeActivity():
+def remove_activity():
     if request.method == "POST":
         users.check_csrf()
         activity_id = request.form["activity_id"]
@@ -28,7 +29,7 @@ def removeActivity():
         return activities()
 
 @app.route("/removepr", methods=["post"])
-def removePr():
+def remove_pr():
     if request.method == "POST":
         users.check_csrf()
         pr_id = request.form["pr_id"]
@@ -36,7 +37,7 @@ def removePr():
         return prs()
 
 @app.route("/removegoal", methods=["post"])
-def removeGoal():
+def remove_goal():
     if request.method== "POST":
         users.check_csrf()
         goal_id = request.form["goal_id"]
@@ -45,7 +46,7 @@ def removeGoal():
 
 
 @app.route("/addgoal", methods=["get", "post"])
-def addGoal():
+def add_goal():
     if request.method == "GET":
         return render_template("addgoal.html")
     if request.method == "POST":
@@ -56,6 +57,7 @@ def addGoal():
         user_id = users.user_id()
         goals.add(user_id, name, frequency,message)
         return render_template("addgoal.html")
+
 @app.route("/goal")
 def goal():
     user_id = session["user_id"]
@@ -64,12 +66,12 @@ def goal():
 
 @app.route("/activities")
 def activities():
-    activities_list = activity.getActivities()
+    activities_list = activity.get_activities()
     
     return render_template("activities.html", activities=activities_list)
 
 @app.route("/removeworkout", methods=["post"])
-def removeWorkout():
+def remove_workout():
     if request.method == "POST":
         users.check_csrf()
         workout_id = request.form["workout_id"]
@@ -78,14 +80,14 @@ def removeWorkout():
 
 @app.route("/prs")
 def prs():
-    pr_list = pr.getPrs()
+    pr_list = pr.get_prs()
     return render_template("prs.html", PRs=pr_list)
 
 @app.route("/addpr", methods=["get", "post"])
-def addPr():
+def add_pr():
     today = datetime.now().strftime('%Y-%m-%d')
     if request.method == "GET":
-        pr_list = pr.getPrs()
+        pr_list = pr.get_prs()
         return render_template("addpr.html", today = today, PRs = pr_list)
     if request.method == "POST":
         users.check_csrf()
@@ -99,13 +101,13 @@ def addPr():
         user_id = users.user_id()
         pr.add(user_id, distance, type, time_h, time_m, time_s, date, message)
 
-        pr_list = pr.getPrs()
+        pr_list = pr.get_prs()
         return render_template("addpr.html", today = today, PRs = pr_list)
 
 
 
 @app.route("/updatepr", methods=["post"])
-def updatePr():
+def update_pr():
     if request.method == "POST":
         users.check_csrf()
         distance = request.form["distance"]
@@ -116,12 +118,12 @@ def updatePr():
         message = request.form["message"]
         date = request.form["date"]
         user_id = users.user_id()
-        pr.updatePr(user_id, distance, type, time_h, time_m, time_s, date, message)
+        pr.update_pr(user_id, distance, type, time_h, time_m, time_s, date, message)
     return redirect("/addpr")
     
 
 @app.route("/addactivity", methods=["get", "post"])
-def addActivity():
+def add_activity():
     today = datetime.now().strftime('%Y-%m-%d')
 
     if request.method == "GET":
@@ -145,7 +147,7 @@ def addActivity():
 
 
 @app.route("/addworkout", methods=["get", "post"])
-def addWorkout():
+def add_workout():
     today = datetime.now().strftime('%Y-%m-%d')
     if request.method == "GET":
         return render_template("addworkout.html",today=today)
@@ -156,9 +158,8 @@ def addWorkout():
         description = request.form["workoutdescription"]
         date = request.form["workoutdate"]
 
-        if not workout.add(name,description, date):
-            # TO DO 
-            print("could not add workout")
+        workout.add(name,description, date)
+            
         return render_template("addworkout.html", today=today)
 
 
@@ -188,19 +189,19 @@ def register():
 
         username = request.form["username"]
         if len(username) < 1 or len(username) > 20:
-            return render_template("register.html", usernameErrorMessage="The username must be no longer than 20 characters and at least one") #TO DO
+            return render_template("register.html", usernameErrorMessage="The username must be no longer than 20 characters and at least one") 
 
         password1 = request.form["password"]
         password2 = request.form["repassword"]
 
         if password1 != password2:
-            return render_template("register.html", passwordsDoNotMatchErrorMessage="The passwords do not match", reusername=username) # TO DO
+            return render_template("register.html", passwordsDoNotMatchErrorMessage="The passwords do not match", reusername=username) 
 
         if password1 == "":
-            return render_template("register.html", passwordLengthErrorMessage="The password must be at least one character long", reusername=username) # TO DO
+            return render_template("register.html", passwordLengthErrorMessage="The password must be at least one character long", reusername=username)
 
         if not users.register(username, password1):
-            return render_template("register.html", registrationErrorMessage="Registration did not work, the username may not be available") # TO DO
+            return render_template("register.html", registrationErrorMessage="Registration did not work, the username may not be available")
         return redirect("/login")
 
 

@@ -1,6 +1,6 @@
 from db import db
-from flask import abort, request, session
-from datetime import datetime
+from flask import session
+
 
 def add(user_id, distance, type, time_h, time_m, time_s, date, message):
     sql = """INSERT INTO prs (user_id, distance, type_id, time_h, time_m, time_s, date, message, visible)
@@ -9,14 +9,14 @@ def add(user_id, distance, type, time_h, time_m, time_s, date, message):
                              "time_m":time_m, "time_s":time_s, "date":date, "message":message })
     db.session.commit()
 
-def getPrs():
+def get_prs():
     user_id = session["user_id"]
     sql = """SELECT p.id, p.distance, t.name, p.time_h, p.time_m, p.time_s, p.date, p.message FROM prs p, types t
             WHERE t.id=p.type_id AND p.user_id=:user_id AND p.visible=1 ORDER BY p.type_id"""
     results = db.session.execute(sql, {"user_id":user_id})
     return results.fetchall()
 
-def updatePr(user_id, distance, type, time_h, time_m, time_s, date, message):
+def update_pr(user_id, distance, type, time_h, time_m, time_s, date, message):
     sql = """SELECT id FROM types WHERE name=:name"""
     type_id = db.session.execute(sql, {"name":type}).fetchone()[0]
     sql = """UPDATE prs SET time_h=:time_h, time_m=:time_m, time_s=:time_s, date=:date, message=:message

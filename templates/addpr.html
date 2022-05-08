@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/static/main.css">
+<h2>Add a Personal Record</h2>
+<a href="/">Return to the main page</a><br>
+<form action="/addpr" method="post">
+
+<label>Type: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;</label>
+<label>Distance: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;Time: h:m:s</label><br>
+<select id="type" name="type">
+    <option value="1">Running</option>
+    <option value="2">Cycling</option>
+    <option value="3">Skiing</option>
+    <option value="4">Swimming</option>
+    <option value="5">Walking</option>
+<input type="text" name="distance" minlength="1" maxlength="20" value="000.00">
+<input type="number" size="1" name="time-hours" value="00" min="0" >:
+<input type="number" size="1" name="time-minutes" value="00" min="0" max="60">:
+<input type="number" size="1" name="time-seconds" value="00" min="0" max="60"><br>
+<label>Message:</label><br>
+<textarea name="message" rows="3" cols="100"></textarea><br>
+<label>Date:</label><input type="date" name="date" value="{{ today }}"><br>
+<input type="submit" value="Save PR">
+
+<input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+
+</form>
+
+<h3>Update a Personal Record</h3>
+
+{% for PR in PRs %}
+
+<form action="/updatepr" method="post">
+
+    <label>Type: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;</label>
+    <label>Distance: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;Time: h:m:s</label><br>
+    
+    <input type="text" name="type" value="{{ PR.name }}" size="6" readonly>
+    <input type="text" name="distance" minlength="1" maxlength="20" value="{{ PR.distance }}" readonly>
+    <input type="number" size="1" name="time-hours" value="{{ PR.time_h }}" min="0" >:
+    <input type="number" size="1" name="time-minutes" value="{{ PR.time_m }}" min="0" max="60">:
+    <input type="number" size="1" name="time-seconds" value="{{ PR.time_s }}" min="0" max="60"><br>
+    <label>Message:</label><br>
+    <textarea name="message" rows="3" cols="100">{{ PR.message }}</textarea><br>
+    <label>Date:</label><input type="date" name="date" value="{{ PR.date }}"><br>
+    <input type="submit" value="Update PR">
+    
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+    
+    </form>
+
+
+{% endfor %}
+

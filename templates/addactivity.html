@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="/static/main.css">
 <h2>Add an activity</h2>
 <a href="/">Return to the main page</a><br>
 <form action="/addactivity" method="post">
@@ -17,10 +17,12 @@
 </select><br>
 <label>Distance: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;Time:</label><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;Time: h:m:s</label><br>
 
 <input type="text" name="distance" minlength="1" maxlength="10" value="000.00">
-<input type="text" name="time" value="00:00:00"><br>
+<input type="number" size="1" name="time-hours" value="00" min="0" >:
+<input type="number" size="1" name="time-minutes" value="00" min="0" max="60">:
+<input type="number" size="1" name="time-seconds" value="00" min="0" max="60"><br>
 <label>Message:</label><br>
 <textarea name="message" rows="10" cols="50"></textarea><br>
 <label>Date:</label><input type="date" name="date" value="{{ today }}"><br>

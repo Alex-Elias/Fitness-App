@@ -1,13 +1,20 @@
-
+<link rel="stylesheet" href="/static/main.css">
 <h2>Activities</h2>
 <a href="/">Return to the main page</a><br>
 {% for activity in activities %}
 
-<b>Name:</b><label>{{activity.name}}</label><br>
-<b>Activity type:</b><label>{{activity.type_id}}</label><br>
+<b>Name:</b><label>{{activity[1]}}</label><br>
+<b>Activity type:</b><label>{{activity[2]}}</label><br>
 <b>Date:</b><label>{{activity.date}}</label><br>
-<b>Distance:</b> <label>{{activity.distance}}</label> <b>Time</b><label>{{activity.time}}</label><br>
-<b>Message:</b><br>
+<b>Distance:</b> <label>{{activity.distance}}</label> <b>Time: </b><label>{{activity.time}}</label><br>
+<b>Message:</b> 
+<form action="/removeactivity" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+    <input type="hidden" id="activity_id" name="activity_id" value="{{activity.id}}">
+    <input type="submit" value="Remove activity">
+    
+
+</form>
 
 <p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{activity.message}}</p>
 

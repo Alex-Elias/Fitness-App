@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/static/main.css">
 <h2>Front page</h2>
 {% if session.user_id%}
 You are logged in as <b>{{ session.username }}</b>. If this is not you, <a href="/logout">Switch users</a>
@@ -5,6 +6,8 @@ You are logged in as <b>{{ session.username }}</b>. If this is not you, <a href=
 <br> View your <a href="/workouts">workouts</a>
 <br> Add an <a href="/addactivity">activity</a>
 <br> View your <a href="/activities">activities</a>
+<br>Add a <a href="/addpr">PR</a>
+<br>View your <a href="/prs">PRs</a>
 {% else %}
 <meta http-equiv="refresh" content="0; URL=/login">
 {% endif %}

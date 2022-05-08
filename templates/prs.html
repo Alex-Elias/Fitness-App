@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/static/main.css">
+<h2>Personal Records</h2>
+<a href="/">Return to the main page</a><br>
+
+{% for PR in PRs %}
+
+<b>Distance:</b><label>{{PR.distance}}</label><br>
+<b>Time: </b><label>{{PR.time_h}}:{{PR.time_m}}:{{PR.time_s}}</label><br>
+<b>Activity type:</b><label>{{PR.name}}</label><br>
+<b>Date:</b><label>{{PR.date}}</label><br>
+
+<b>Message:</b><br>
+<form action="/removepr" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+    <input type="hidden" id="pr_id" name="pr_id" value="{{PR.id}}">
+    <input type="submit" value="Remove PR">
+    
+
+</form>
+
+<p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{PR.message}}</p>
+<br>
+<br>
+
+
+{% endfor %}

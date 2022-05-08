@@ -5,6 +5,7 @@ import users
 from datetime import datetime
 import workout
 import activity
+import pr
 
 
 @app.route("/")
@@ -17,10 +18,26 @@ def index():
 def workouts():
     workout_list = workout.getWorkouts()
     return render_template("workouts.html", workouts=workout_list)
+@app.route("/removeactivity", methods=["post"])
+def removeActivity():
+    if request.method == "POST":
+        users.check_csrf()
+        activity_id = request.form["activity_id"]
+        activity.remove(activity_id)
+        return activities()
+
+@app.route("/removepr", methods=["post"])
+def removePr():
+    if request.method == "POST":
+        users.check_csrf()
+        pr_id = request.form["pr_id"]
+        pr.remove(pr_id)
+        return prs()
 
 @app.route("/activities")
 def activities():
     activities_list = activity.getActivities()
+    
     return render_template("activities.html", activities=activities_list)
 
 @app.route("/removeworkout", methods=["post"])
@@ -30,6 +47,50 @@ def removeWorkout():
         workout_id = request.form["workout_id"]
         workout.remove(workout_id)
         return workouts()
+
+@app.route("/prs")
+def prs():
+    pr_list = pr.getPrs()
+    return render_template("prs.html", PRs=pr_list)
+
+@app.route("/addpr", methods=["get", "post"])
+def addPr():
+    today = datetime.now().strftime('%Y-%m-%d')
+    if request.method == "GET":
+        pr_list = pr.getPrs()
+        return render_template("addpr.html", today = today, PRs = pr_list)
+    if request.method == "POST":
+        users.check_csrf()
+        distance = request.form["distance"]
+        type = request.form["type"]
+        time_h = request.form["time-hours"]
+        time_m = request.form["time-minutes"]
+        time_s = request.form["time-seconds"]
+        message = request.form["message"]
+        date = request.form["date"]
+        user_id = users.user_id()
+        pr.add(user_id, distance, type, time_h, time_m, time_s, date, message)
+
+        pr_list = pr.getPrs()
+        return render_template("addpr.html", today = today, PRs = pr_list)
+
+
+
+@app.route("/updatepr", methods=["post"])
+def updatePr():
+    if request.method == "POST":
+        users.check_csrf()
+        distance = request.form["distance"]
+        type = request.form["type"]
+        time_h = request.form["time-hours"]
+        time_m = request.form["time-minutes"]
+        time_s = request.form["time-seconds"]
+        message = request.form["message"]
+        date = request.form["date"]
+        user_id = users.user_id()
+        pr.updatePr(user_id, distance, type, time_h, time_m, time_s, date, message)
+    return redirect("/addpr")
+    
 
 @app.route("/addactivity", methods=["get", "post"])
 def addActivity():
@@ -49,13 +110,16 @@ def addActivity():
         name = request.form["name"]
         type = request.form["type"]
         distance = request.form["distance"]
-        time = request.form["time"]
+        time_hours = request.form["time-hours"]
+        time_minutes = request.form["time-minutes"]
+        time_seconds = request.form["time-seconds"]
         message = request.form["message"]
         date = request.form["date"]
         user_id = users.user_id()
+        time = f"{time_hours}:{time_minutes}:{time_seconds}"
         activity.add(user_id,name,type,0,time,distance,date,message)
     
-    return render_template("addactivity.html", today=today)
+        return render_template("addactivity.html", today=today)
 
 
 @app.route("/addworkout", methods=["get", "post"])

@@ -8,8 +8,8 @@ def add(user_id, name, frequency, message):
     db.session.execute(sql,{"user_id":user_id, "name":name, "frequency":frequency, "message":message})
     db.session.commit()
 
-def get():
-    user_id = session["user_id"]
+def get(user_id):
+    
     sql = """SELECT id, name, frequency, message FROM goals WHERE user_id=:user_id AND visible=1"""
 
     results = db.session.execute(sql, {"user_id":user_id})

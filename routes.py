@@ -13,7 +13,7 @@ import goals
 def index():
     user_id = users.user_id()
 
-    return render_template("index.html", workouts=workout.getWorkoutToday(user_id), goals=goals.get())
+    return render_template("index.html", workouts=workout.getWorkoutToday(user_id), goals=goals.get(user_id))
 
 @app.route("/workouts")
 def workouts():

@@ -58,7 +58,8 @@ def addGoal():
         return render_template("addgoal.html")
 @app.route("/goal")
 def goal():
-    goal_list = goals.get()
+    user_id = session["user_id"]
+    goal_list = goals.get(user_id)
     return render_template("goal.html", Goals=goal_list)
 
 @app.route("/activities")

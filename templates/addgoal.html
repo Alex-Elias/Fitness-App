@@ -1,0 +1,12 @@
+<h2>Add a Goal</h2>
+<a href="/">Return to the main page</a><br>
+
+<form actiion="/addgoal" method="post">
+    <b>Name:</b><input type="text" name="name" id="name" minlength="1" maxlength="20"><br>
+    <b>Frequency:</b><input type="text" name="frequency" id="frequency" minlength="1" maxlength="20" value="daily"><br>
+    <b>Message:</b><br>
+    <textarea name="message" rows="3" cols="100"></textarea><br>
+    <input type="hidden" name="csrf_token" value="{{session.csrf_token}}">
+    <input type="submit" value="Add Goal">
+
+</form>

@@ -1,0 +1,20 @@
+<h2>Goals</h2>
+<a href="/">Return to the main page</a><br>
+
+{% for Goal in Goals %}
+
+<b>Name: </b><label>{{Goal.name}}</label><br>
+<b>Frequency: </b><label>{{Goal.frequency}}</label><br>
+<b>Message:</b><p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{Goal.message}}</p>
+
+<form action="/removegoal" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token}}">
+    <input type="hidden" id="goal_id" name="goal_id" value="{{Goal.id}}">
+    
+    <input type="submit" value="Remove goal">
+    
+
+</form>
+
+
+{% endfor %}

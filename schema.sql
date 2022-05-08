@@ -38,6 +38,16 @@ CREATE TABLE prs (
     visible INTEGER
 );
 
+CREATE TABLE goals (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    name TEXT,
+    frequency TEXT,
+    message TEXT,
+    visible INTEGER
+
+);
+
 CREATE TABLE types (
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE

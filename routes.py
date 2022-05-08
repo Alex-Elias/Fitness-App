@@ -6,13 +6,14 @@ from datetime import datetime
 import workout
 import activity
 import pr
+import goals
 
 
 @app.route("/")
 def index():
     user_id = users.user_id()
 
-    return render_template("index.html", workouts=workout.getWorkoutToday(user_id))
+    return render_template("index.html", workouts=workout.getWorkoutToday(user_id), goals=goals.get())
 
 @app.route("/workouts")
 def workouts():
@@ -33,6 +34,32 @@ def removePr():
         pr_id = request.form["pr_id"]
         pr.remove(pr_id)
         return prs()
+
+@app.route("/removegoal", methods=["post"])
+def removeGoal():
+    if request.method== "POST":
+        users.check_csrf()
+        goal_id = request.form["goal_id"]
+        goals.remove(goal_id)
+        return goal()
+
+
+@app.route("/addgoal", methods=["get", "post"])
+def addGoal():
+    if request.method == "GET":
+        return render_template("addgoal.html")
+    if request.method == "POST":
+        users.check_csrf()
+        name = request.form["name"]
+        frequency = request.form["frequency"]
+        message = request.form["message"]
+        user_id = users.user_id()
+        goals.add(user_id, name, frequency,message)
+        return render_template("addgoal.html")
+@app.route("/goal")
+def goal():
+    goal_list = goals.get()
+    return render_template("goal.html", Goals=goal_list)
 
 @app.route("/activities")
 def activities():
@@ -95,13 +122,7 @@ def updatePr():
 @app.route("/addactivity", methods=["get", "post"])
 def addActivity():
     today = datetime.now().strftime('%Y-%m-%d')
-#    types = activity.getTypes()
-#    types_id = []
-#    types_name = []
-#    for type in types:
-#        types_id.append(type[0])
-#        types_name.append(str(type.name))
-#    print(types_name)
+
     if request.method == "GET":
         return render_template("addactivity.html", today=today)
     

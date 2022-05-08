@@ -8,6 +8,8 @@ You are logged in as <b>{{ session.username }}</b>. If this is not you, <a href=
 <br> View your <a href="/activities">activities</a>
 <br>Add a <a href="/addpr">PR</a>
 <br>View your <a href="/prs">PRs</a>
+<br>Add a <a href="/addgoal">goal</a>
+<br>View your <a href="/goal">goals</a>
 {% else %}
 <meta http-equiv="refresh" content="0; URL=/login">
 {% endif %}
@@ -19,6 +21,15 @@ You are logged in as <b>{{ session.username }}</b>. If this is not you, <a href=
 <p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{workout.description}}</p>
 
 
+
+
+{% endfor %}
+<h2>Goals:</h2>
+{% for goal in goals %}
+<br>
+<b>Name: </b><label>{{goal.name}}</label><br>
+<b>Frequency: </b><label>{{goal.frequency}}</label><br>
+<b>Message:</b><p style="padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">{{goal.message}}</p>
 
 
 {% endfor %}
